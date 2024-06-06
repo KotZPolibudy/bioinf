@@ -1,0 +1,18 @@
+<dna key="22355728" length="20" start="TGCAAT">
+<probe pattern="NNNNNN">
+<cell posL="1" posH="3">AATCTT</cell>
+<cell posL="2" posH="4">ATCTTG</cell>
+<cell posL="13" posH="15">CAAGTG</cell>
+<cell posL="2" posH="4">CAATCT</cell>
+<cell posL="5" posH="7">CTTGGT</cell>
+<cell posL="12" posH="14">GCAAGT</cell>
+<cell posL="1" posH="3">GCAATC</cell>
+<cell posL="8" posH="10">GGTTGC</cell>
+<cell posL="4" posH="6">TCTTGG</cell>
+<cell posL="10" posH="12">TGCAAG</cell>
+<cell posL="3" posH="5">TGCAAT</cell>
+<cell posL="7" posH="9">TGGTTG</cell>
+<cell posL="9" posH="11">TTGCAA</cell>
+<cell posL="5" posH="7">TTGGTT</cell>
+</probe>
+</dna>

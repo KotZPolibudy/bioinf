@@ -1,0 +1,21 @@
+<dna key="13397770" length="20" start="GAGA">
+<probe pattern="NNNN">
+<cell posL="15" posH="15">AACA</cell>
+<cell posL="16" posH="16">ACAC</cell>
+<cell posL="3" posH="3">ACCA</cell>
+<cell posL="1" posH="1">AGAC</cell>
+<cell posL="6" posH="6">ATCC</cell>
+<cell posL="5" posH="5">CATC</cell>
+<cell posL="4" posH="4">CCAT</cell>
+<cell posL="8" posH="8">CCTG</cell>
+<cell posL="13" posH="13">CTAA</cell>
+<cell posL="9" posH="9">CTGG</cell>
+<cell posL="2" posH="2">GACC</cell>
+<cell posL="3" posH="3">GAGA</cell>
+<cell posL="12" posH="12">GCTA</cell>
+<cell posL="11" posH="11">GGCT</cell>
+<cell posL="14" posH="14">TAAC</cell>
+<cell posL="7" posH="7">TCCT</cell>
+<cell posL="10" posH="10">TGGC</cell>
+</probe>
+</dna>
