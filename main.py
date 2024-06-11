@@ -1,14 +1,15 @@
 import importlib
 import time
+from parser import parse_xml
 
 
 def measure_time_and_get_result(mod_name, fun_name, param):
     module = importlib.import_module(mod_name)
     function_to_call = getattr(module, fun_name)
 
-    start_time = time.time()
+    start_time = time.perf_counter()
     res = function_to_call(param)
-    end_time = time.time()
+    end_time = time.perf_counter()
 
     time_elapsed = end_time - start_time
     return res, time_elapsed
@@ -28,9 +29,10 @@ def compare_results_and_times(res):
 
 
 if __name__ == "__main__":
-    modules_to_test = ["dokladny", "dokladny22", "zachlanny22"]
+    modules_to_test = ["dokladny", "debruin_bez_ne", "zachlanny_fullgap", "zachlanny_halfgap", "zachlanny_gap2", "zachlanny_gap2_alter" ]
     function_name = "function_to_test"
-    parameter = "data/przyklad_dokladny.xml"
+    path = "data/przyklad_dokladny.xml"
+    parameter = parse_xml(path)
 
     results = {}
 
@@ -44,7 +46,7 @@ if __name__ == "__main__":
 
     print("Porównanie wyników:")
     for module, result in comparison["function_results"].items():
-        print(f"{module.ljust(max_module_length)}: {result}")
+        print(f"{module.ljust(max_module_length)}: {result}, Oczekiwana długość: {parameter.length}  Uzyskana długość: {len(result)}")
 
     print("\nPorównanie czasów wykonania:")
     for module, time_taken in comparison["execution_times"].items():
