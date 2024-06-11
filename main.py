@@ -29,14 +29,17 @@ def compare_results_and_times(res):
 
 
 if __name__ == "__main__":
-    modules_to_test = ["dokladny", "debruin_bez_ne", "zachlanny_fullgap", "zachlanny_halfgap", "zachlanny_gap2", "zachlanny_gap2_alter" ]
+    modules_to_test = ["dokladny", "dokladny2", "dokladny3_drzewo",
+                       "debruin_bez_ne", "debruin_poprawiany", "debruin_z_ne",
+                       "zachlanny_fullgap", "zachlanny_halfgap", "zachlanny_gap2", "zachlanny_gap2_alter"]
     function_name = "function_to_test"
-    path = "data/przyklad_dokladny.xml"
+    path = "data/przyklad3.xml"
     parameter = parse_xml(path)
 
     results = {}
 
     for module_name in modules_to_test:
+        parameter = parse_xml(path)
         result, elapsed_time = measure_time_and_get_result(module_name, function_name, parameter)
         results[module_name] = (result, elapsed_time)
 

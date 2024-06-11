@@ -3,7 +3,6 @@ from dataclasses import dataclass, asdict
 
 @dataclass
 class Cell:
-
     posL: int
     posH: int
     data: str
