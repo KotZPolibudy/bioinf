@@ -35,7 +35,7 @@ def generate_neighbour(current_sequence: DNASequence, cells: List[Cell]) -> DNAS
     # Sort cells by their start position
     cells.sort(key=lambda x: x.posL)
 
-    # Try different insertion points and combinations of cells
+    # Prolong the sequence with overlapping cells
     for cell in cells:
         if cell.posH > len(new_sequence.sequence):
             overlap_start = max(0, len(new_sequence.sequence) - cell.posL)
@@ -45,30 +45,14 @@ def generate_neighbour(current_sequence: DNASequence, cells: List[Cell]) -> DNAS
 
     return new_sequence
 
-def handle_gaps(current_sequence: DNASequence, cells: List[Cell]) -> DNASequence:
-    # Identify gaps in the sequence
-    gap_positions = [(i, i + 1) for i in range(len(current_sequence.sequence) - 1)
-                     if current_sequence.sequence[i] == 'X' or current_sequence.sequence[i + 1] == 'X']
-    for gap_start, gap_end in gap_positions:
-        for cell in cells:
-            if cell.posL <= gap_start and cell.posH >= gap_end:
-                overlap_start = max(cell.posL, gap_start)
-                overlap_end = min(cell.posH, gap_end)
-                if overlap_end > overlap_start:
-                    gap_data = cell.data[overlap_start - cell.posL: overlap_end - cell.posL]
-                    current_sequence.sequence = current_sequence.sequence[:gap_start] + gap_data + current_sequence.sequence[gap_end:]
-                    break
-    return current_sequence
 
-def taboo_search(initial_sequence: DNASequence, cells: List[Cell], target_sequence: str, max_iter: int = 1000,
-                 tabu_size: int = 10) -> DNASequence:
+def taboo_search(initial_sequence: DNASequence, cells: List[Cell], target_sequence: str, max_iter: int,
+                 tabu_size: int) -> DNASequence:
     current_sequence = initial_sequence
     best_sequence = initial_sequence
     tabu_list = []
-
     for iteration in range(max_iter):
         neighbors = [generate_neighbour(current_sequence, cells) for _ in range(10)]
-        neighbors = [handle_gaps(neighbor, cells) for neighbor in neighbors]
         neighbors.sort(key=lambda x: -x.evaluate_fitness(target_sequence))
 
         best_neighbor = neighbors[0]
@@ -82,15 +66,12 @@ def taboo_search(initial_sequence: DNASequence, cells: List[Cell], target_sequen
         current_sequence = best_neighbor
         if current_sequence.sequence in tabu_list:
             current_sequence = random.choice(neighbors)
-
-        # Print progress
-        # print(f"Iteration {iteration + 1}: Best Fitness = {best_sequence.evaluate_fitness(target_sequence)}, Best Sequence = {best_sequence.sequence}")
-
     return best_sequence
 
+
 def function_to_test(data):
-    # Parameters for Tabu search
-    ITERACJE = 1000
+    # parametry do zmiany tabu
+    ITERACJE = 20
     ILE_ROZWIAZAN = 10
     start = data.start
     cells = data.cells
@@ -104,7 +85,7 @@ def function_to_test(data):
 if __name__ == '__main__':
     from parser import parse_xml
 
-    filepath = "../data/4.xml"
+    filepath = "../data/przyklad_dokladny.xml"
     przyklad = parse_xml(filepath)
 
     res = function_to_test(przyklad)

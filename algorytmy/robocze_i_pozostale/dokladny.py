@@ -95,7 +95,7 @@ def function_to_test(param: Param) -> str:
 if __name__ == '__main__':
     from parser import parse_xml  # Assuming parse_xml is defined elsewhere
 
-    filepath = "../data/przyklad_dokladny.xml"
+    filepath = "../../data/przyklad_dokladny.xml"
     przyklad = parse_xml(filepath)
     # print(przyklad)
 

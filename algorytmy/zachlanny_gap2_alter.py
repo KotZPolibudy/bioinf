@@ -37,7 +37,6 @@ def function_to_test(param):
     cells = sorted(param.cells, key=lambda x: x.posH)
     cell_length = len(start)
     seq = start
-
     while cells and len(seq) < length:
         found = False
         for gap in range(1, 3):  # skrócony przeszukiwany gap
@@ -52,7 +51,7 @@ def function_to_test(param):
             if found:
                 break
         if not(found):
-            seq += cells[0].data  # to przypisujemy pierwszy i lecimy dalej, zachłanny ma być...
+            seq += cells[0].data  # to przypisujemy pierwszy i lecimy dalej z być może niepowiązanym podciągiem
             cells.pop(0)
     return seq
 

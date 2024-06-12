@@ -29,12 +29,14 @@ def compare_results_and_times(res):
 
 
 if __name__ == "__main__":
-    modules_to_test = [ "algorytmy.dokladny_backtrack_drzewo",
+    modules_to_test = ["algorytmy.dokladny_backtrack_drzewo",
+                       "algorytmy.tabu", "algorytmy.tabu500_10", "algorytmy.tabu100_20",
                        "algorytmy.zachlanny_fullgap", "algorytmy.zachlanny_halfgap", "algorytmy.zachlanny_gap2_alter"]
     function_name = "function_to_test"
     # patha = "data/5.xml"
     # parameter = parse_xml(path)
-    paths = ["data/5.xml", "data/6.xml", "data/7.xml", "data/8.xml", "data/9.xml", "data/10.xml", ]
+    # paths = ["data/przyklad_dokladny.xml", "data/5.xml", "data/6.xml", "data/7.xml", "data/8.xml", "data/9.xml", "data/10.xml", ]
+    paths = ["data/przyklad_dokladny.xml", "data/11.xml"]
 
     for path in paths:
         parameter = parse_xml(path)
