@@ -29,28 +29,30 @@ def compare_results_and_times(res):
 
 
 if __name__ == "__main__":
-    modules_to_test = ["dokladny", "dokladny2", "dokladny3_drzewo",
-                       "debruin_bez_ne", "debruin_poprawiany", "debruin_z_ne",
-                       "zachlanny_fullgap", "zachlanny_halfgap", "zachlanny_gap2", "zachlanny_gap2_alter"]
+    modules_to_test = [ "algorytmy.dokladny_backtrack_drzewo",
+                       "algorytmy.zachlanny_fullgap", "algorytmy.zachlanny_halfgap", "algorytmy.zachlanny_gap2_alter"]
     function_name = "function_to_test"
-    path = "data/przyklad3.xml"
-    parameter = parse_xml(path)
+    # patha = "data/5.xml"
+    # parameter = parse_xml(path)
+    paths = ["data/5.xml", "data/6.xml", "data/7.xml", "data/8.xml", "data/9.xml", "data/10.xml", ]
 
-    results = {}
-
-    for module_name in modules_to_test:
+    for path in paths:
         parameter = parse_xml(path)
-        result, elapsed_time = measure_time_and_get_result(module_name, function_name, parameter)
-        results[module_name] = (result, elapsed_time)
+        print(parameter)
+        results = {}
+        for module_name in modules_to_test:
+            parameter = parse_xml(path)
+            result, elapsed_time = measure_time_and_get_result(module_name, function_name, parameter)
+            results[module_name] = (result, elapsed_time)
 
-    comparison = compare_results_and_times(results)
+        comparison = compare_results_and_times(results)
 
-    max_module_length = max(len(module) for module in modules_to_test)
+        max_module_length = max(len(module) for module in modules_to_test)
 
-    print("Porównanie wyników:")
-    for module, result in comparison["function_results"].items():
-        print(f"{module.ljust(max_module_length)}: {result}, Oczekiwana długość: {parameter.length}  Uzyskana długość: {len(result)}")
+        print("Porównanie wyników:")
+        for module, result in comparison["function_results"].items():
+            print(f"{module.ljust(max_module_length+2)}: Oczekiwana długość: {parameter.length}  Uzyskana długość: {len(result)}, {result}")
 
-    print("\nPorównanie czasów wykonania:")
-    for module, time_taken in comparison["execution_times"].items():
-        print(f"{module.ljust(max_module_length)}: {time_taken:.6f} sekund")
+        print("\nPorównanie czasów wykonania:")
+        for module, time_taken in comparison["execution_times"].items():
+            print(f"{module.ljust(max_module_length+2)}: {time_taken:.6f} sekund")

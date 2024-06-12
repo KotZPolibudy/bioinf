@@ -8,7 +8,7 @@ from parser import parse_xml
 
 
 def string_reconstruction(patterns):
-    return genome_path(eulerian_path(create_debrujin_graph(patterns)))
+    return genome_path(eulerian_path(create_debrujin_graph(patterns), start))
 
 
 def create_debrujin_graph(patterns):
@@ -27,44 +27,31 @@ def create_debrujin_graph(patterns):
     return dict
 
 
-def genome_path(kmers, apppend_last=True):
+def genome_path(kmers, append_last=True):
     genome = ''
     kmer_length = len(kmers[0])
     for kmer in kmers:
         genome += kmer[0]
-    if apppend_last:
-        genome += kmer[1:]
+    if append_last:
+        genome += kmer[-1]
     return genome
 
 
-def eulerian_path(dict):
+
+def eulerian_path(graph, start):
     stack = []
     path = []
+    stack.append(start)
 
-    temp_start = start[:len(start) - 1]
-
-    temp_stack1 = {key: val for key, val in dict.items()
-                   if key.startswith(temp_start)}
-
-    temp_key = list(temp_stack1.keys())
-    temp_value = list(temp_stack1.values())
-
-    stack.append(temp_key[0])
-    stack.append(temp_value[0][0])
-
-    w = str(temp_value[0][0])
-
-    dict[temp_start].remove(temp_value[0][0])
-
-    while stack != []:
-        u_v = stack[-1]
-        try:
-            w = dict[u_v][0]
-            stack.append(w)
-            dict[u_v].remove(w)
-        except:
+    while stack:
+        current_node = stack[-1]
+        if graph[current_node]:
+            next_node = graph[current_node].pop()
+            stack.append(next_node)
+        else:
             path.append(stack.pop())
-    return path[::-1]
+    return path
+
 
 
 def suffix(string):
@@ -72,7 +59,7 @@ def suffix(string):
 
 
 def prefix(string):
-    return string[0:-1]
+    return string[:-1]
 
 
 def function_to_test(dane):
@@ -81,13 +68,16 @@ def function_to_test(dane):
     start = dane.start
     probe = len(start)
     array_oli = [cell.data for cell in dane.cells]
-    size = length - probe + 1
 
-    return string_reconstruction(array_oli)
+    # Ensure start is a valid k-mer
+    if start not in array_oli:
+        array_oli.append(start)
+
+    return string_reconstruction(array_oli)[:length]
 
 
 if __name__ == '__main__':
-    filepath = "data/przyklad_dokladny.xml"
+    filepath = "../data/przyklad_dokladny.xml"
     przyklad = parse_xml(filepath)
     res = function_to_test(przyklad)
     print(res)

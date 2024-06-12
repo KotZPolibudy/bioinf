@@ -43,7 +43,7 @@ def function_to_test(param):
 if __name__ == '__main__':
     from parser import parse_xml
 
-    filepath = "data/przyklad_dokladny.xml"
+    filepath = "../../data/przyklad_dokladny.xml"
     przyklad = parse_xml(filepath)
 
     res = function_to_test(przyklad)

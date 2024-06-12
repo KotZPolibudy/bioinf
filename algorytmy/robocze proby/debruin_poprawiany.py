@@ -49,7 +49,7 @@ def function_to_test(dane):
 
 
 if __name__ == '__main__':
-    filepath = "data/przyklad_dokladny.xml"
+    filepath = "../../data/przyklad_dokladny.xml"
     przyklad = parse_xml(filepath)
     res = function_to_test(przyklad)
     print(res)

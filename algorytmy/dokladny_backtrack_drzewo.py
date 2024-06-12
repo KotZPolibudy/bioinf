@@ -73,28 +73,40 @@ def function_to_test(param):
     trie.delete_word(start)
 
     dna_sequence = start
-    while len(cells) > 0:
+    sequence_stack = [(dna_sequence, cells.copy(), trie)]
+
+    while sequence_stack:
+        dna_sequence, current_cells, current_trie = sequence_stack.pop()
+
+        if len(dna_sequence) >= length:
+            return dna_sequence
+
         found = False
         for overlap in range(n - 1, 0, -1):
             prefix = dna_sequence[-overlap:]
-            result = trie.search_with_prefix(prefix)
+            result = current_trie.search_with_prefix(prefix)
             if result:
-                next_cell = result[0]
-                dna_sequence += next_cell.data[overlap:]
-                trie.delete_word(next_cell.data)
-                cells.remove(next_cell)
                 found = True
+                for next_cell in result:
+                    new_dna_sequence = dna_sequence + next_cell.data[overlap:]
+                    new_trie = Trie()
+                    for cell in current_cells:
+                        if cell.data != next_cell.data:
+                            new_trie.insert(cell.data, cell)
+                    sequence_stack.append(
+                        (new_dna_sequence, [cell for cell in current_cells if cell.data != next_cell.data], new_trie))
                 break
-        if not found:
-            break
 
-    return dna_sequence
+        if not found and len(dna_sequence) < length:
+            continue  # No progress can be made, backtrack to try another path
+
+    return dna_sequence  # If no sequence meets the required length, return the best attempt
 
 
 if __name__ == '__main__':
     from parser import parse_xml
 
-    filepath = "data/przyklad_dokladny.xml"
+    filepath = "../data/4.xml"
     przyklad = parse_xml(filepath)
 
     res = function_to_test(przyklad)

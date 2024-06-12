@@ -40,7 +40,7 @@ def function_to_test(param):
 
     while cells and len(seq) < length:
         found = False
-        for gap in range(1, cell_length + 1):
+        for gap in range(1, 3):  # skrócony przeszukiwany gap
             j = 0
             while j < len(cells):
                 if fits(seq, cells[j], cell_length, gap):
@@ -51,13 +51,16 @@ def function_to_test(param):
                 j += 1
             if found:
                 break
+        if not(found):
+            seq += cells[0].data  # to przypisujemy pierwszy i lecimy dalej, zachłanny ma być...
+            cells.pop(0)
     return seq
 
 
 if __name__ == '__main__':
     from parser import parse_xml
 
-    filepath = "data/przyklad_dokladny.xml"
+    filepath = "../data/przyklad_dokladny.xml"
     przyklad = parse_xml(filepath)
     res = function_to_test(przyklad)
     print(res)
